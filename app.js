@@ -46,4 +46,21 @@
     //   }
     // });
   });
+
+
+  map.on('click', 'blackout-fill', function (e) {
+    new mapboxgl.Popup({ closeOnClick: true })
+      .setLngLat(e.lngLat)
+      .setHTML(e.features[0].properties.N03_001 + " " + e.features[0].properties.N03_004 + "<br/>停電 " + e.features[0].properties.count + "軒")
+      .addTo(map);
+  });
+
+  map.on('mouseenter', 'blackout-fill', function () {
+    map.getCanvas().style.cursor = 'pointer';
+  });
+
+  map.on('mouseleave', 'blackout-fill', function () {
+    map.getCanvas().style.cursor = '';
+  });
+
 })();
