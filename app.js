@@ -13,38 +13,69 @@
   });
 
   map.on("load", function () {
-    map.addSource('blackout', {
-      type: "geojson",
-      data: "https://tepco-power-grid-hack-mrfbzypr4q-an.a.run.app/v1/blackout.geojson",
-      attribution:
-        '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_3.html" target="_blank">国土交通省国土数値情報ダウンロードサイト</a>',
-    });
+    document.body.style.cursor = "progress";
 
-    map.addLayer({
-      id: "blackout-fill",
-      type: 'fill',
-      source: 'blackout',
+    fetch(
+      "https://tepco-power-grid-hack-mrfbzypr4q-an.a.run.app/v1/blackout.geojson"
+    )
+      .then((res) => res.json())
+      .then((geojson) => {
 
-      layout: {},
-      paint: {
-        'fill-outline-color': '#111',
-        'fill-color': '#FFA500',
-        'fill-opacity': 0.75
-      }
-    });
+        map.addSource('blackout', {
+          type: "geojson",
+          data: geojson,
+          attribution:
+            '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_3.html" target="_blank">国土交通省国土数値情報ダウンロードサイト</a>',
+        });
+
+        map.addLayer({
+          id: "blackout-fill",
+          type: 'fill',
+          source: 'blackout',
+
+          layout: {},
+          paint: {
+            'fill-outline-color': '#111',
+            'fill-color': '#FFA500',
+            'fill-opacity': 0.75
+          }
+        });
 
 
-    // map.addLayer({
-    //   id: "blackout-line",
-    //   type: 'line',
-    //   source: 'blackout',
+        // map.addLayer({
+        //   id: "blackout-line",
+        //   type: 'line',
+        //   source: 'blackout',
 
-    //   layout: {},
-    //   paint: {
-    //     'line-width': 3,
-    //     'line-color': '#000',
-    //   }
-    // });
+        //   layout: {},
+        //   paint: {
+        //     'line-width': 3,
+        //     'line-color': '#000',
+        //   }
+        // });
+
+        let datetime = (function (yyyymmddHHMM) {
+          let yyyy = yyyymmddHHMM.substr(0, 4)
+          let mm = yyyymmddHHMM.substr(4, 2)
+          let dd = yyyymmddHHMM.substr(6, 2)
+          let HH = yyyymmddHHMM.substr(8, 2)
+          let MM = yyyymmddHHMM.substr(10, 2)
+
+          let date = new Date();
+          date.setFullYear(Number(yyyy))
+          date.setMonth(Number(mm) - 1)
+          date.setDate(Number(dd))
+          date.setHours(Number(HH))
+          date.setMinutes(Number(MM))
+          date.setSeconds(0)
+          return date;
+        })(geojson.datetime.toString());
+
+        var element = document.getElementById("datetime");
+        element.innerText = datetime.toLocaleString('ja-JP');
+
+        document.body.style.cursor = "auto";
+      });
   });
 
 
