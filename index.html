@@ -15,11 +15,20 @@
 
     #header {
       position: absolute;
-      top: 0;
+      top: 20px;
       left: 20px;
       z-index: 100;
       color: lightgray;
+    }
 
+    #header h1 {
+      padding: 0;
+      margin: 0;
+    }
+
+    #header p {
+      padding: 0;
+      margin: 0;
     }
 
     #map {
@@ -38,8 +47,9 @@
 
 <body>
   <div id="header">
-    <!-- <h1>東京電力パワーグリッド 停電情報</h1> -->
-    <h2>更新時刻 <span id="datetime">----/--/-- --:--:--</span></h2>
+    <h1>東京電力パワーグリッド 停電情報</h1>
+    <p>更新時刻 <span id="datetime">----/--/-- --:--:--</span></p>
+    <p>停電軒数 計 <span id="count">-</span> 軒</p>
   </div>
   <div id="map"></div>
 

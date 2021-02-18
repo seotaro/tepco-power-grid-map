@@ -71,8 +71,15 @@
           return date;
         })(geojson.datetime.toString());
 
-        var element = document.getElementById("datetime");
-        element.innerText = datetime.toLocaleString('ja-JP');
+        {
+          var element = document.getElementById("datetime");
+          element.innerText = datetime.toLocaleString('ja-JP');
+        }
+
+        {
+          var element = document.getElementById("count");
+          element.innerText = geojson.count ? geojson.count : '-';
+        }
 
         document.body.style.cursor = "auto";
       });
