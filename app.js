@@ -35,9 +35,9 @@
 
           layout: {},
           paint: {
-            'fill-outline-color': '#111',
-            'fill-color': '#FFA500',
-            'fill-opacity': 0.75
+            'fill-outline-color': 'rgba(255, 170, 0, 1.0)',
+            'fill-color': 'rgba(255, 170, 0, 0.75)',
+            'fill-opacity': 1.0
           }
         });
 
