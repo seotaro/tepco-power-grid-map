@@ -78,7 +78,7 @@
 
         {
           var element = document.getElementById("count");
-          element.innerText = geojson.count ? geojson.count : '-';
+          element.innerText = geojson.count;
         }
 
         document.body.style.cursor = "auto";
