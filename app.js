@@ -12,31 +12,38 @@
     antialias: true,
   });
 
+  let blackout;
+
   map.on("load", function () {
     document.body.style.cursor = "progress";
 
     fetch(
-      "https://tepco-power-grid-hack-mrfbzypr4q-an.a.run.app/v1/blackout.geojson"
+      "https://tepco-power-grid-hack-mrfbzypr4q-an.a.run.app/v1/blackout.json"
     )
       .then((res) => res.json())
-      .then((geojson) => {
+      .then((json) => {
+        blackout = json;
 
         map.addSource('blackout', {
-          type: "geojson",
-          data: geojson,
+          type: "vector",
+          tiles: ['https://storage.googleapis.com/tmp-20210220/tiles/tepco-areas/{z}/{x}/{y}.pbf'],
           attribution:
             '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_3.html" target="_blank">国土交通省国土数値情報ダウンロードサイト</a>',
         });
 
+        const areas = Object.keys(blackout.areas);
         map.addLayer({
           id: "blackout-fill",
           type: 'fill',
           source: 'blackout',
+          "source-layer": 'tepco-areas',
 
           layout: {},
           paint: {
-            'fill-outline-color': 'rgba(255, 170, 0, 1.0)',
-            'fill-color': 'rgba(255, 170, 0, 0.75)',
+            'fill-color': ["case",
+              ["in", ["get", "N03_007"], ["literal", areas]], 'rgba(255, 170, 0, 0.5)',
+              'rgba(0, 0, 0, 0.0)'
+            ],
             'fill-opacity': 1.0
           }
         });
@@ -69,7 +76,7 @@
           date.setMinutes(Number(MM))
           date.setSeconds(0)
           return date;
-        })(geojson.datetime.toString());
+        })(json.datetime.toString());
 
         {
           var element = document.getElementById("datetime");
@@ -78,7 +85,7 @@
 
         {
           var element = document.getElementById("count");
-          element.innerText = geojson.count;
+          element.innerText = json.count;
         }
 
         document.body.style.cursor = "auto";
@@ -87,9 +94,10 @@
 
 
   map.on('click', 'blackout-fill', function (e) {
+    const area = blackout.areas[e.features[0].properties.N03_007];
     new mapboxgl.Popup({ closeOnClick: true })
       .setLngLat(e.lngLat)
-      .setHTML(e.features[0].properties.N03_001 + " " + e.features[0].properties.N03_004 + "<br/>停電 " + e.features[0].properties.count + "軒")
+      .setHTML(`${e.features[0].properties.N03_004}<br/>停電 ${area ? area.count : 0}  軒`)
       .addTo(map);
   });
 
