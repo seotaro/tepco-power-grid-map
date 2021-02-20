@@ -42,7 +42,7 @@
           paint: {
             'fill-color': ["case",
               ["in", ["get", "N03_007"], ["literal", areas]], 'rgba(255, 170, 0, 0.5)',
-              'rgba(0, 0, 0, 0.0)'
+              'rgba(255, 255, 255, 0.1)'
             ],
             'fill-opacity': 1.0
           }
