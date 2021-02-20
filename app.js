@@ -48,18 +48,18 @@
           }
         });
 
+        map.addLayer({
+          id: "blackout-line",
+          type: 'line',
+          source: 'blackout',
+          "source-layer": 'tepco-areas',
 
-        // map.addLayer({
-        //   id: "blackout-line",
-        //   type: 'line',
-        //   source: 'blackout',
-
-        //   layout: {},
-        //   paint: {
-        //     'line-width': 3,
-        //     'line-color': '#000',
-        //   }
-        // });
+          layout: {},
+          paint: {
+            'line-width': 0.5,
+            'line-color': '#ccc',
+          }
+        });
 
         let datetime = (function (yyyymmddHHMM) {
           let yyyy = yyyymmddHHMM.substr(0, 4)
