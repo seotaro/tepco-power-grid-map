@@ -95,9 +95,20 @@
 
   map.on('click', 'blackout-fill', function (e) {
     const area = blackout.areas[e.features[0].properties.N03_007];
+
+    let html = `${e.features[0].properties.N03_004} 停電 ${area ? area.count : 0} 軒`;
+    if (area) {
+      const details = area.details;
+      html += `<br/><ul>`;
+      for (let detailArea in details) {
+        html += `<li>${details[detailArea].name}（${details[detailArea].count}）</li>`
+      }
+      html += `</ul>`;
+    }
+
     new mapboxgl.Popup({ closeOnClick: true })
       .setLngLat(e.lngLat)
-      .setHTML(`${e.features[0].properties.N03_004}<br/>停電 ${area ? area.count : 0}  軒`)
+      .setHTML(html)
       .addTo(map);
   });
 
