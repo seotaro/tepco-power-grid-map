@@ -28,7 +28,7 @@
           type: "vector",
           tiles: ['https://storage.googleapis.com/tmp-20210220/tiles/tepco-areas/{z}/{x}/{y}.pbf'],
           attribution:
-            '<a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_3.html" target="_blank">国土交通省国土数値情報ダウンロードサイト</a>',
+            '<a href="https://teideninfo.tepco.co.jp/index-j.html" target="_blank">東京電力パワーグリッド 停電情報</a> | <a href="https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_3.html" target="_blank">国土交通省国土数値情報ダウンロードサイト</a>',
         });
 
         const areas = Object.keys(blackout.areas);
